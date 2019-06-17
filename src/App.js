@@ -74,6 +74,7 @@ class App extends Component {
                         animated="fade"
                         loading={this.state.loading}
                         onClick={this.fetchImage.bind(this)}
+                        onMouseDown={e => e.preventDefault()}
                         fluid
                       >
                         <Button.Content visible>
@@ -95,6 +96,7 @@ class App extends Component {
                           setTimeout(() => this.fetchImage(), 10);
                         }}
                         fluid
+                        inverted
                       >
                         <Button.Content visible>
                           <Icon
@@ -118,6 +120,7 @@ class App extends Component {
                       <Input
                         fluid
                         focus
+                        inverted
                         loading={this.state.loading}
                         size="mini"
                         placeholder="Tag"
