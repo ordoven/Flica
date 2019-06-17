@@ -1,5 +1,6 @@
 .App-header {
   background-color: #282c34;
+  padding-top: 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -9,13 +10,7 @@
   color: white;
 }
 
-.image {
-  width: 40vw;
-  height: 99%;
-  /* margin-bottom: 30px; */
-}
-
-.image > img {
+.image img {
   opacity: 0.9;
   display: inline-block;
   vertical-align: middle;
@@ -26,7 +21,7 @@
   transition-property: opacity, box-shadow, transform;
 }
 
-.image > img:hover {
+.image img:hover {
   opacity: 1;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
