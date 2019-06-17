@@ -7,9 +7,9 @@ import {
   Image,
   Divider,
   Icon,
-  Container,
   Grid,
-  Checkbox
+  Input,
+  Statistic
 } from "semantic-ui-react";
 
 class App extends Component {
@@ -47,9 +47,8 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <Image className="logo" src={logo} size="small" />
-
-          <Grid stackable columns={2}>
-            <Grid.Row className="left-row">
+          <Grid stackable columns={2} className="view">
+            <Grid.Row>
               <Grid.Column width="10">
                 <div className="image">
                   <a
@@ -62,6 +61,7 @@ class App extends Component {
                       src={this.state.responseURL}
                       rounded={true}
                       fluid
+                      centered
                     />
                   </a>
                 </div>
@@ -74,29 +74,15 @@ class App extends Component {
                         animated="fade"
                         loading={this.state.loading}
                         onClick={this.fetchImage.bind(this)}
-                        // size="massive"
                         fluid
                       >
                         <Button.Content visible>
                           <Icon fitted name="refresh" />
                         </Button.Content>
-                        <Button.Content hidden>New</Button.Content>
+                        <Button.Content hidden>Next</Button.Content>
                       </Button>
                     </Grid.Column>
                     <Grid.Column textAlign="center" verticalAlign="middle">
-                      {/* <Checkbox
-                        toggle
-                        disabled={this.state.loading}
-                        checked={this.state.mobile}
-                        onChange={() => {
-                          this.setState({
-                            mobile: !this.state.mobile,
-                            loading: true
-                          });
-                          setTimeout(() => this.fetchImage(), 1);
-                        }}
-                      /> */}
-
                       <Button
                         animated="fade"
                         onMouseDown={e => e.preventDefault()}
@@ -108,7 +94,6 @@ class App extends Component {
                           });
                           setTimeout(() => this.fetchImage(), 10);
                         }}
-                        // size="massive"
                         fluid
                       >
                         <Button.Content visible>
@@ -125,6 +110,36 @@ class App extends Component {
                         </Button.Content>
                       </Button>
                     </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+                <Grid columns={1} textAlign="center" verticalAlign="middle">
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Input
+                        fluid
+                        focus
+                        loading={this.state.loading}
+                        size="mini"
+                        placeholder="Tag"
+                        iconPosition="left"
+                        icon="tag"
+                        onChange={e => {}}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <div>
+                      <Statistic.Group size="tiny">
+                        <Statistic inverted>
+                          <Statistic.Value>22</Statistic.Value>
+                          <Statistic.Label>Seen</Statistic.Label>
+                        </Statistic>
+                        <Statistic inverted>
+                          <Statistic.Value>31,200</Statistic.Value>
+                          <Statistic.Label>Wallpapers</Statistic.Label>
+                        </Statistic>
+                      </Statistic.Group>
+                    </div>
                   </Grid.Row>
                 </Grid>
               </Grid.Column>
