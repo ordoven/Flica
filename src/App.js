@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import logo from "./logo.png";
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Image, Divider, Icon } from "semantic-ui-react";
+import { Button, Image, Divider, Icon, Container } from "semantic-ui-react";
 
 class App extends Component {
   constructor() {
@@ -37,14 +38,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <Image src={logo} size="small" />
           <div className="image">
             <a download href={this.state.responseURL}>
               <Image
                 size={this.state.mobile ? "medium" : "massive"}
                 src={this.state.responseURL}
-                // centered
                 rounded
-                // fluid
               />
             </a>
             <Divider />
