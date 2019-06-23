@@ -76,10 +76,16 @@ class App extends Component {
                   <Grid.Row>
                     <Grid.Column textAlign="center" verticalAlign="middle">
                       <Button
+                        size="huge"
                         animated="fade"
                         loading={this.state.loading}
                         disabled={this.state.loading}
-                        onClick={this.fetchImage.bind(this)}
+                        onClick={() => {
+                          if (this.state.keywordSearch && !this.state.query) {
+                          } else {
+                            this.fetchImage();
+                          }
+                        }}
                         onMouseDown={e => e.preventDefault()}
                         fluid
                       >
@@ -91,6 +97,7 @@ class App extends Component {
                     </Grid.Column>
                     <Grid.Column textAlign="center" verticalAlign="middle">
                       <Button
+                        size="huge"
                         animated="fade"
                         onMouseDown={e => e.preventDefault()}
                         loading={this.state.loading}
@@ -121,12 +128,17 @@ class App extends Component {
                   </Grid.Row>
                   <Divider inverted />
                 </Grid>
-                <Grid columns={1} textAlign="center" verticalAlign="middle">
+                <Grid
+                  stackable
+                  columns={1}
+                  textAlign="center"
+                  verticalAlign="middle"
+                >
                   <Grid.Row>
                     <Grid.Column>
                       <Segment>
                         <Radio
-                          label="Use keyword"
+                          label="Search by tag"
                           fitted
                           toggle
                           onChange={() => {
@@ -139,13 +151,13 @@ class App extends Component {
                           }}
                         />
 
-                        <Segment raised={this.state.keywordSearch}>
+                        <Segment size="large" raised={this.state.keywordSearch}>
                           <Input
                             disabled={!this.state.keywordSearch}
                             focus
                             inverted
                             loading={this.state.loading}
-                            size="big"
+                            size="large"
                             placeholder="Tag"
                             iconPosition="left"
                             icon="tag"
