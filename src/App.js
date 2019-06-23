@@ -9,7 +9,9 @@ import {
   Icon,
   Grid,
   Input,
-  Statistic
+  Statistic,
+  Radio,
+  Segment
 } from "semantic-ui-react";
 
 class App extends Component {
@@ -18,6 +20,8 @@ class App extends Component {
     this.state = {
       mobile: false,
       loading: false,
+      keywordSearch: false,
+      query: "",
       responseURL: ""
     };
   }
@@ -26,8 +30,10 @@ class App extends Component {
     this.setState({ loading: true });
     fetch(
       new Request(
-        "https://source.unsplash.com/random/" +
-          (this.state.mobile ? "720x1280" : "1920x1080")
+        "https://source.unsplash.com/" +
+          (this.state.mobile ? "720x1280" : "1920x1080") +
+          "/?" +
+          this.state.query
       )
     ).then(response => {
       this.setState({ responseURL: response.url });
@@ -60,7 +66,6 @@ class App extends Component {
                       size={this.state.mobile ? "medium" : "massive"}
                       src={this.state.responseURL}
                       rounded={true}
-                      fluid
                       centered
                     />
                   </a>
@@ -73,6 +78,7 @@ class App extends Component {
                       <Button
                         animated="fade"
                         loading={this.state.loading}
+                        disabled={this.state.loading}
                         onClick={this.fetchImage.bind(this)}
                         onMouseDown={e => e.preventDefault()}
                         fluid
@@ -88,6 +94,7 @@ class App extends Component {
                         animated="fade"
                         onMouseDown={e => e.preventDefault()}
                         loading={this.state.loading}
+                        disabled={this.state.loading}
                         onClick={() => {
                           this.setState({
                             mobile: !this.state.mobile,
@@ -96,7 +103,6 @@ class App extends Component {
                           setTimeout(() => this.fetchImage(), 10);
                         }}
                         fluid
-                        inverted
                       >
                         <Button.Content visible>
                           <Icon
@@ -113,21 +119,42 @@ class App extends Component {
                       </Button>
                     </Grid.Column>
                   </Grid.Row>
+                  <Divider inverted />
                 </Grid>
                 <Grid columns={1} textAlign="center" verticalAlign="middle">
                   <Grid.Row>
                     <Grid.Column>
-                      <Input
-                        fluid
-                        focus
-                        inverted
-                        loading={this.state.loading}
-                        size="mini"
-                        placeholder="Tag"
-                        iconPosition="left"
-                        icon="tag"
-                        onChange={e => {}}
-                      />
+                      <Segment>
+                        <Radio
+                          label="Use keyword"
+                          fitted
+                          toggle
+                          onChange={() => {
+                            if (this.state.keywordSearch) {
+                              this.setState({ query: "" });
+                            }
+                            this.setState({
+                              keywordSearch: !this.state.keywordSearch
+                            });
+                          }}
+                        />
+
+                        <Segment raised={this.state.keywordSearch}>
+                          <Input
+                            disabled={!this.state.keywordSearch}
+                            focus
+                            inverted
+                            loading={this.state.loading}
+                            size="big"
+                            placeholder="Tag"
+                            iconPosition="left"
+                            icon="tag"
+                            onChange={e => {
+                              this.setState({ query: e.target.value });
+                            }}
+                          />
+                        </Segment>
+                      </Segment>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
