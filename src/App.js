@@ -11,7 +11,10 @@ import {
   Input,
   Statistic,
   Radio,
-  Segment
+  Segment,
+  Label,
+  Header,
+  Modal
 } from "semantic-ui-react";
 
 class App extends Component {
@@ -21,6 +24,8 @@ class App extends Component {
       mobile: false,
       loading: false,
       keywordSearch: false,
+      error: false,
+      count: 0,
       query: "",
       responseURL: ""
     };
@@ -36,13 +41,42 @@ class App extends Component {
           this.state.query
       )
     ).then(response => {
-      this.setState({ responseURL: response.url });
-      console.log(this.state.responseURL);
+      if (
+        response.url ===
+        "https://images.unsplash.com/source-404?fit=crop&fm=jpg&h=800&q=60&w=1200"
+      ) {
+        console.log("Not found");
+        // TODO: Notify user that wallpaper no wallpaper was found
+      } else {
+        this.setState({
+          responseURL: response.url,
+          count: this.state.count + 1
+        });
+        console.log(this.state.responseURL);
+      }
+
       setTimeout(() => {
         this.setState({ loading: false });
       }, 2000);
     });
   }
+
+  ModalModalExample = () => (
+    <Modal>
+      <Modal.Header>Select a Photo</Modal.Header>
+      <Modal.Content image>
+        <Image wrapped size="medium" src="/images/avatar/large/rachel.png" />
+        <Modal.Description>
+          <Header>Default Profile Image</Header>
+          <p>
+            We've found the following gravatar image associated with your e-mail
+            address.
+          </p>
+          <p>Is it okay to use this photo?</p>
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
+  );
 
   componentDidMount() {
     this.fetchImage();
@@ -72,7 +106,7 @@ class App extends Component {
                 </div>
               </Grid.Column>
               <Grid.Column width="6">
-                <Grid columns={2} divided verticalAlign="middle">
+                <Grid columns={3} divided verticalAlign="middle">
                   <Grid.Row>
                     <Grid.Column textAlign="center" verticalAlign="middle">
                       <Button
@@ -82,7 +116,9 @@ class App extends Component {
                         disabled={this.state.loading}
                         onClick={() => {
                           if (this.state.keywordSearch && !this.state.query) {
+                            this.setState({ error: true });
                           } else {
+                            this.setState({ error: false });
                             this.fetchImage();
                           }
                         }}
@@ -125,6 +161,42 @@ class App extends Component {
                         </Button.Content>
                       </Button>
                     </Grid.Column>
+                    <Grid.Column textAlign="center" verticalAlign="middle">
+                      <Modal
+                        trigger={
+                          <Button
+                            animated="vertical"
+                            size="huge"
+                            fluid
+                            inverted
+                            as="div"
+                            labelPosition="left"
+                          >
+                            <Label pointing="right">{this.state.count}</Label>
+                            <Button size="huge" fluid icon>
+                              <Icon name="picture" />
+                            </Button>
+                          </Button>
+                        }
+                      >
+                        <Modal.Header>Wallpaper Gallery</Modal.Header>
+                        <Modal.Content image>
+                          <Image
+                            wrapped
+                            size="medium"
+                            src="/images/avatar/large/rachel.png"
+                          />
+                          <Modal.Description>
+                            <Header>Default Profile Image</Header>
+                            <p>
+                              We've found the following gravatar image
+                              associated with your e-mail address.
+                            </p>
+                            <p>Is it okay to use this photo?</p>
+                          </Modal.Description>
+                        </Modal.Content>
+                      </Modal>
+                    </Grid.Column>
                   </Grid.Row>
                   <Divider inverted />
                 </Grid>
@@ -141,7 +213,7 @@ class App extends Component {
                           label="Search by tag"
                           fitted
                           toggle
-                          onChange={() => {
+                          onChange={e => {
                             if (this.state.keywordSearch) {
                               this.setState({ query: "" });
                             }
@@ -161,6 +233,7 @@ class App extends Component {
                             placeholder="Tag"
                             iconPosition="left"
                             icon="tag"
+                            error={this.state.error}
                             onChange={e => {
                               this.setState({ query: e.target.value });
                             }}
