@@ -170,7 +170,6 @@ class App extends Component {
                       <Modal
                         trigger={
                           <Button
-                            animated="vertical"
                             size="huge"
                             fluid
                             inverted
@@ -181,7 +180,7 @@ class App extends Component {
                               {this.state.gallery.length}
                             </Label>
                             <Button size="huge" fluid icon>
-                              <Icon name="picture" />
+                              <Icon fitted name="picture" />
                             </Button>
                           </Button>
                         }
