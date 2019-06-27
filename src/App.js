@@ -46,7 +46,7 @@ class App extends Component {
         "https://images.unsplash.com/source-404?fit=crop&fm=jpg&h=800&q=60&w=1200"
       ) {
         console.log("Not found");
-        // TODO: Notify user that wallpaper no wallpaper was found
+        // TODO: Notify user that no wallpaper was found
       } else {
         this.setState({
           responseURL: response.url,
@@ -243,7 +243,7 @@ class App extends Component {
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
-                    <div>
+                    {/* <div>
                       <Statistic.Group size="tiny">
                         <Statistic inverted>
                           <Statistic.Value>22</Statistic.Value>
@@ -254,7 +254,7 @@ class App extends Component {
                           <Statistic.Label>Wallpapers</Statistic.Label>
                         </Statistic>
                       </Statistic.Group>
-                    </div>
+                    </div> */}
                   </Grid.Row>
                 </Grid>
               </Grid.Column>
