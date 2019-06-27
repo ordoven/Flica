@@ -9,11 +9,9 @@ import {
   Icon,
   Grid,
   Input,
-  Statistic,
   Radio,
   Segment,
   Label,
-  Header,
   Modal
 } from "semantic-ui-react";
 
@@ -25,7 +23,7 @@ class App extends Component {
       loading: false,
       keywordSearch: false,
       error: false,
-      count: 0,
+      gallery: [],
       query: "",
       responseURL: ""
     };
@@ -48,11 +46,15 @@ class App extends Component {
         console.log("Not found");
         // TODO: Notify user that no wallpaper was found
       } else {
+        let tempGallery = this.state.gallery;
+        tempGallery.push(response.url);
+
         this.setState({
           responseURL: response.url,
-          count: this.state.count + 1
+          gallery: tempGallery
         });
-        console.log(this.state.responseURL);
+
+        console.log(this.state.gallery);
       }
 
       setTimeout(() => {
@@ -61,26 +63,29 @@ class App extends Component {
     });
   }
 
-  ModalModalExample = () => (
-    <Modal>
-      <Modal.Header>Select a Photo</Modal.Header>
-      <Modal.Content image>
-        <Image wrapped size="medium" src="/images/avatar/large/rachel.png" />
-        <Modal.Description>
-          <Header>Default Profile Image</Header>
-          <p>
-            We've found the following gravatar image associated with your e-mail
-            address.
-          </p>
-          <p>Is it okay to use this photo?</p>
-        </Modal.Description>
-      </Modal.Content>
-    </Modal>
-  );
-
   componentDidMount() {
     this.fetchImage();
   }
+
+  modalNode = props => (
+    <Modal.Content image>
+      <Image
+        centered
+        rounded
+        as="a"
+        href={props.url}
+        wrapped
+        inline
+        size="large"
+        src={props.url}
+      />
+      {/* <Modal.Description>
+        <Header>Default</Header>
+        <p></p>
+        <p></p>
+      </Modal.Description> */}
+    </Modal.Content>
+  );
 
   render() {
     return (
@@ -172,7 +177,9 @@ class App extends Component {
                             as="div"
                             labelPosition="left"
                           >
-                            <Label pointing="right">{this.state.count}</Label>
+                            <Label pointing="right">
+                              {this.state.gallery.length}
+                            </Label>
                             <Button size="huge" fluid icon>
                               <Icon name="picture" />
                             </Button>
@@ -180,21 +187,9 @@ class App extends Component {
                         }
                       >
                         <Modal.Header>Wallpaper Gallery</Modal.Header>
-                        <Modal.Content image>
-                          <Image
-                            wrapped
-                            size="medium"
-                            src="/images/avatar/large/rachel.png"
-                          />
-                          <Modal.Description>
-                            <Header>Default Profile Image</Header>
-                            <p>
-                              We've found the following gravatar image
-                              associated with your e-mail address.
-                            </p>
-                            <p>Is it okay to use this photo?</p>
-                          </Modal.Description>
-                        </Modal.Content>
+                        {this.state.gallery.map((item, key) => (
+                          <this.modalNode url={item} key={item.id} />
+                        ))}
                       </Modal>
                     </Grid.Column>
                   </Grid.Row>
@@ -242,8 +237,8 @@ class App extends Component {
                       </Segment>
                     </Grid.Column>
                   </Grid.Row>
-                  <Grid.Row>
-                    {/* <div>
+                  {/* <Grid.Row>
+                    <div>
                       <Statistic.Group size="tiny">
                         <Statistic inverted>
                           <Statistic.Value>22</Statistic.Value>
@@ -254,8 +249,8 @@ class App extends Component {
                           <Statistic.Label>Wallpapers</Statistic.Label>
                         </Statistic>
                       </Statistic.Group>
-                    </div> */}
-                  </Grid.Row>
+                    </div>
+                  </Grid.Row> */}
                 </Grid>
               </Grid.Column>
             </Grid.Row>
