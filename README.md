@@ -1,4 +1,4 @@
-<a href="#"><img src="./src/logo.png" title="FVCproductions" alt="FVCproductions"></a>
+<a href="#"><img src="./src/logo.png" title="Flica" alt="Flica"></a>
 
 <!-- [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) -->
 
@@ -70,7 +70,7 @@ The app is ready to be deployed.
 Reach out to me at one of the following places!
 
 - Email at <a href="mailto:tadasknieza@gmail.com" target="_top">`tadasknieza@gmail.com`</a>
-- Twitter at <a href="http://twitter.com/fvcproductions" target="_blank">`@trashtofu`</a>
+- Twitter at <a href="http://twitter.com/trashtofu" target="_blank">`@trashtofu`</a>
 
 ---
 
