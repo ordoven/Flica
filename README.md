@@ -1,14 +1,13 @@
 <a href="#"><img src="./src/logo.png" title="Flica" alt="Flica"></a>
 
-<!-- [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) -->
-
 # Flica
 
 [![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger)
 
 
-> A web application built using React.js, Semantic UI & Unsplash Source
+> A web application built using React.js, Semantic UI & Unsplash Source.
 
+> Access at: https://sleepy-joliot-a28cc4.netlify.com
 ---
 
 ## Features
