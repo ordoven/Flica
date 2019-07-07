@@ -14,6 +14,7 @@ import {
   Label,
   Modal
 } from "semantic-ui-react";
+import Unsplash, { toJson } from "unsplash-js";
 
 class App extends Component {
   constructor() {
@@ -25,42 +26,40 @@ class App extends Component {
       error: false,
       gallery: [],
       query: "",
-      responseURL: ""
+      unsplash: new Unsplash({
+        applicationId:
+          "ccb07e71cb4e97185a7cecab55d1ad1024b89c062f8759b9ccae6870db7280fa",
+        secret:
+          "901ffa2f5250f014bfc2db11c4eeea78df401bdfbf442f8e83942fcc0497c2e5"
+      }),
+      photo: {}
     };
   }
 
   fetchImage() {
     this.setState({ loading: true });
-    fetch(
-      new Request(
-        "https://source.unsplash.com/" +
-          (this.state.mobile ? "720x1280" : "1920x1080") +
-          "/?" +
-          this.state.query
-      )
-    ).then(response => {
-      if (
-        response.url ===
-        "https://images.unsplash.com/source-404?fit=crop&fm=jpg&h=800&q=60&w=1200"
-      ) {
-        console.log("Not found");
-        // TODO: Notify user that no wallpaper was found
-      } else {
-        let tempGallery = this.state.gallery;
-        tempGallery.push(response.url);
-
+    this.state.unsplash.photos
+      .getRandomPhoto({
+        width: this.state.mobile ? 720 : 1920,
+        height: this.state.mobile ? 1280 : 1080
+      })
+      .then(toJson)
+      .then(json => {
+        let copyGallery = this.state.gallery;
+        copyGallery.push(json);
         this.setState({
-          responseURL: response.url,
-          gallery: tempGallery
+          photo: json,
+          gallery: copyGallery
         });
-
-        console.log(this.state.gallery);
-      }
-
-      setTimeout(() => {
-        this.setState({ loading: false });
-      }, 2000);
-    });
+      })
+      .finally(() => {
+        setTimeout(() => {
+          this.setState({
+            loading: false
+          });
+          console.log(this.state.gallery);
+        }, 2000);
+      });
   }
 
   componentDidMount() {
@@ -79,11 +78,6 @@ class App extends Component {
         size="large"
         src={props.url}
       />
-      {/* <Modal.Description>
-        <Header>Default</Header>
-        <p></p>
-        <p></p>
-      </Modal.Description> */}
     </Modal.Content>
   );
 
@@ -95,20 +89,16 @@ class App extends Component {
           <Grid stackable columns={2} className="view">
             <Grid.Row>
               <Grid.Column width="10">
-                <div className="image">
-                  <a
-                    download
-                    href={this.state.responseURL}
-                    target={this.state.responseURL}
-                  >
-                    <Image
-                      size={this.state.mobile ? "medium" : "massive"}
-                      src={this.state.responseURL}
-                      rounded={true}
-                      centered
-                    />
-                  </a>
-                </div>
+                <Image
+                  src={
+                    this.state.gallery.length > 0
+                      ? this.state.photo.urls.full
+                      : ""
+                  }
+                  size={this.state.size ? "medium" : "massive"}
+                  rounded={true}
+                  centered
+                />
               </Grid.Column>
               <Grid.Column width="6">
                 <Grid columns={3} divided verticalAlign="middle">
@@ -187,7 +177,7 @@ class App extends Component {
                       >
                         <Modal.Header>Wallpaper Gallery</Modal.Header>
                         {this.state.gallery.map((item, key) => (
-                          <this.modalNode url={item} key={item.id} />
+                          <this.modalNode url={item.urls.full} key={item.id} />
                         ))}
                       </Modal>
                     </Grid.Column>
@@ -217,39 +207,34 @@ class App extends Component {
                           }}
                         />
 
-                        <Segment size="large" raised={this.state.keywordSearch}>
-                          <Input
-                            disabled={!this.state.keywordSearch}
-                            focus
-                            inverted
-                            loading={this.state.loading}
-                            size="large"
-                            placeholder="Tag"
-                            iconPosition="left"
-                            icon="tag"
-                            error={this.state.error}
-                            onChange={e => {
-                              this.setState({ query: e.target.value });
-                            }}
-                          />
-                        </Segment>
+                        <Input
+                          disabled={!this.state.keywordSearch}
+                          focus
+                          inverted
+                          loading={this.state.loading}
+                          size="large"
+                          placeholder="Tag"
+                          iconPosition="left"
+                          icon="tag"
+                          error={this.state.error}
+                          onChange={e => {
+                            this.setState({ query: e.target.value });
+                          }}
+                        />
                       </Segment>
                     </Grid.Column>
                   </Grid.Row>
-                  {/* <Grid.Row>
-                    <div>
-                      <Statistic.Group size="tiny">
-                        <Statistic inverted>
-                          <Statistic.Value>22</Statistic.Value>
-                          <Statistic.Label>Seen</Statistic.Label>
-                        </Statistic>
-                        <Statistic inverted>
-                          <Statistic.Value>31,200</Statistic.Value>
-                          <Statistic.Label>Wallpapers</Statistic.Label>
-                        </Statistic>
-                      </Statistic.Group>
-                    </div>
-                  </Grid.Row> */}
+                  <Grid.Row>
+                    <Grid.Column>
+                      <Segment>
+                        <Segment>
+                          <h2>Created At</h2>
+                          <p>{this.state.photo.created_at}</p>
+                        </Segment>
+                        <Segment>Second</Segment>
+                      </Segment>
+                    </Grid.Column>
+                  </Grid.Row>
                 </Grid>
               </Grid.Column>
             </Grid.Row>
