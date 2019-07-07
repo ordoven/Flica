@@ -89,16 +89,31 @@ class App extends Component {
           <Grid stackable columns={2} className="view">
             <Grid.Row>
               <Grid.Column width="10">
-                <Image
-                  src={
+                <a
+                  href={
                     this.state.gallery.length > 0
-                      ? this.state.photo.urls.full
-                      : ""
+                      ? this.state.photo.links.download
+                      : "#"
                   }
-                  size={this.state.size ? "medium" : "massive"}
-                  rounded={true}
-                  centered
-                />
+                  target={
+                    this.state.gallery.length > 0
+                      ? this.state.photo.links.download
+                      : "#"
+                  }
+                  className="image"
+                  download
+                >
+                  <Image
+                    src={
+                      this.state.gallery.length > 0
+                        ? this.state.photo.urls.full
+                        : ""
+                    }
+                    size={this.state.size ? "medium" : "massive"}
+                    rounded={true}
+                    centered
+                  />
+                </a>
               </Grid.Column>
               <Grid.Column width="6">
                 <Grid columns={3} divided verticalAlign="middle">
@@ -231,7 +246,10 @@ class App extends Component {
                           <h2>Created At</h2>
                           <p>{this.state.photo.created_at}</p>
                         </Segment>
-                        <Segment>Second</Segment>
+                        <Segment>
+                          <h2>Description</h2>
+                          <p>{this.state.photo.alt_description}</p>
+                        </Segment>
                       </Segment>
                     </Grid.Column>
                   </Grid.Row>
