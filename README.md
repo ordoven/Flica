@@ -5,7 +5,7 @@
 [![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger)
 
 
-> A web application built using React.js, Semantic UI & Unsplash Source.
+> A web application built using React, Semantic UI & Unsplash Image API.
 
 > Access at: https://sleepy-joliot-a28cc4.netlify.com
 ---
@@ -13,9 +13,10 @@
 ## Features
 
 - Progressive web application (PWA).
-- Ability to switch between `mobile` & `desktop` aspect ratio.
+- Image metadata fetch from [Unsplash Image API](https://unsplash.com/developers)
+- Ability to switch between `mobile` & `desktop` aspect ratios.
 - Traversed wallpaper gallery.
-- Click on wallpaper to download.
+- Quick image download.
 - Search by tag.
 
 ## Usage 
