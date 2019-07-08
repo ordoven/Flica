@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.png";
-import "./App.css";
 import "semantic-ui-css/semantic.min.css";
+import "./App.css";
 import {
   Button,
   Image,
@@ -15,6 +15,7 @@ import {
   Modal
 } from "semantic-ui-react";
 import Unsplash, { toJson } from "unsplash-js";
+import { thisExpression } from "@babel/types";
 
 class App extends Component {
   constructor() {
@@ -62,22 +63,57 @@ class App extends Component {
       });
   }
 
+  forceDownload(photo) {
+    if (photo === null || photo === undefined) {
+      return;
+    } else {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", photo.urls.raw, true);
+      xhr.responseType = "blob";
+      xhr.onload = function() {
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(this.response);
+        var tag = document.createElement("a");
+        tag.href = imageUrl;
+        tag.download = photo.alt_description;
+        document.body.appendChild(tag);
+        tag.click();
+        document.body.removeChild(tag);
+      };
+      xhr.send();
+    }
+  }
+
   componentDidMount() {
     this.fetchImage();
   }
 
+  infoNode = props =>
+    props.description !== null && (
+      <Segment>
+        <h2>{props.title}</h2>
+        <p>{props.description}</p>
+      </Segment>
+    );
+
   modalNode = props => (
     <Modal.Content image>
-      <Image
-        centered
-        rounded
-        as="a"
-        href={props.url}
-        wrapped
-        inline
-        size="large"
-        src={props.url}
-      />
+      <Button
+        onClick={() => {
+          this.forceDownload(props.photo);
+        }}
+        className="image-button"
+        fluid
+      >
+        <Image
+          centered
+          rounded
+          wrapped
+          inline
+          size="large"
+          src={props.photo.urls.full}
+        />
+      </Button>
     </Modal.Content>
   );
 
@@ -89,19 +125,13 @@ class App extends Component {
           <Grid stackable columns={2} className="view">
             <Grid.Row>
               <Grid.Column width="10">
-                <a
-                  href={
-                    this.state.gallery.length > 0
-                      ? this.state.photo.links.download
-                      : "#"
-                  }
-                  target={
-                    this.state.gallery.length > 0
-                      ? this.state.photo.links.download
-                      : "#"
-                  }
-                  className="image"
-                  download
+                <Button
+                  onClick={() => {
+                    this.forceDownload(
+                      this.state.gallery.length > 0 ? this.state.photo : null
+                    );
+                  }}
+                  className="image-button"
                 >
                   <Image
                     src={
@@ -109,11 +139,11 @@ class App extends Component {
                         ? this.state.photo.urls.full
                         : ""
                     }
-                    size={this.state.size ? "medium" : "massive"}
+                    size={this.state.mobile ? "medium" : "massive"}
                     rounded={true}
                     centered
                   />
-                </a>
+                </Button>
               </Grid.Column>
               <Grid.Column width="6">
                 <Grid columns={3} divided verticalAlign="middle">
@@ -192,7 +222,7 @@ class App extends Component {
                       >
                         <Modal.Header>Wallpaper Gallery</Modal.Header>
                         {this.state.gallery.map((item, key) => (
-                          <this.modalNode url={item.urls.full} key={item.id} />
+                          <this.modalNode photo={item} key={item.id} />
                         ))}
                       </Modal>
                     </Grid.Column>

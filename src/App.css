@@ -6,16 +6,20 @@
 
 .App-header {
   background-color: #242a39;
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  /* color: white; */
 }
 
-.image img {
+.ui.button.image-button {
+  background: none;
+  border: none;
+  background-color: none;
+}
+
+.image-button img {
   padding: 0;
   margin-bottom: 30px;
   opacity: 0.9;
@@ -28,7 +32,7 @@
   transition-property: opacity, box-shadow, transform;
 }
 
-.image img:hover {
+.image-button img:hover {
   opacity: 1;
   transform: scale(1.02);
 }
