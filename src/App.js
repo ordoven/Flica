@@ -272,18 +272,18 @@ class App extends Component {
                   <Grid.Row>
                     <Grid.Column>
                       <Segment>
-                        <Segment>
-                          <h2>Title</h2>
-                          <p>{this.state.photo.alt_description}</p>
-                        </Segment>
-                        <Segment>
-                          <h2>Description</h2>
-                          <p>{this.state.photo.description}</p>
-                        </Segment>
-                        <Segment>
-                          <h2>Created At</h2>
-                          <p>{this.state.photo.created_at}</p>
-                        </Segment>
+                        <this.infoNode
+                          title="Title"
+                          description={this.state.photo.alt_description}
+                        />
+                        <this.infoNode
+                          title="Description"
+                          description={this.state.photo.description}
+                        />
+                        <this.infoNode
+                          title="Created At"
+                          description={this.state.photo.created_at}
+                        />
                       </Segment>
                     </Grid.Column>
                   </Grid.Row>
