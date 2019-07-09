@@ -40,8 +40,8 @@ class App extends Component {
     this.setState({ loading: true });
     this.state.unsplash.photos
       .getRandomPhoto({
-        width: this.state.mobile ? 720 : 1920,
-        height: this.state.mobile ? 1280 : 1080
+        width: this.state.mobile ? 720 : 1024,
+        height: this.state.mobile ? 1280 : 576
       })
       .then(toJson)
       .then(json => {
@@ -136,7 +136,7 @@ class App extends Component {
                   <Image
                     src={
                       this.state.gallery.length > 0
-                        ? this.state.photo.urls.regular
+                        ? this.state.photo.urls.custom
                         : ""
                     }
                     size="massive"
@@ -183,7 +183,7 @@ class App extends Component {
                             mobile: !this.state.mobile,
                             loading: true
                           });
-                          setTimeout(() => this.fetchImage(), 10);
+                          setTimeout(() => this.fetchImage(), 100);
                         }}
                         fluid
                       >
