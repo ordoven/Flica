@@ -119,7 +119,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <header>
           <Image className="logo" src={logo} size="small" />
           <Grid stackable columns={2} className="view">
             <Grid.Row>
