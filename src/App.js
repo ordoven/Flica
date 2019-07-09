@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.png";
+import logo from "./logo.jpg";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 import {
@@ -15,7 +15,6 @@ import {
   Modal
 } from "semantic-ui-react";
 import Unsplash, { toJson } from "unsplash-js";
-import { thisExpression } from "@babel/types";
 
 class App extends Component {
   constructor() {
@@ -58,7 +57,7 @@ class App extends Component {
           this.setState({
             loading: false
           });
-          console.log(this.state.gallery);
+          console.info(this.state.gallery);
         }, 2000);
       });
   }
@@ -111,7 +110,7 @@ class App extends Component {
           wrapped
           inline
           size="large"
-          src={props.photo.urls.full}
+          src={props.photo.urls.regular}
         />
       </Button>
     </Modal.Content>
@@ -132,14 +131,15 @@ class App extends Component {
                     );
                   }}
                   className="image-button"
+                  fluid
                 >
                   <Image
                     src={
                       this.state.gallery.length > 0
-                        ? this.state.photo.urls.full
+                        ? this.state.photo.urls.regular
                         : ""
                     }
-                    size={this.state.mobile ? "medium" : "massive"}
+                    size="massive"
                     rounded={true}
                     centered
                   />
