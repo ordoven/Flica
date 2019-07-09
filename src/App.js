@@ -31,8 +31,7 @@ class App extends Component {
           "ccb07e71cb4e97185a7cecab55d1ad1024b89c062f8759b9ccae6870db7280fa",
         secret:
           "901ffa2f5250f014bfc2db11c4eeea78df401bdfbf442f8e83942fcc0497c2e5"
-      }),
-      photo: {}
+      })
     };
   }
 
@@ -48,7 +47,6 @@ class App extends Component {
         let copyGallery = this.state.gallery;
         copyGallery.push(json);
         this.setState({
-          photo: json,
           gallery: copyGallery
         });
       })
@@ -80,6 +78,14 @@ class App extends Component {
         document.body.removeChild(tag);
       };
       xhr.send();
+    }
+  }
+
+  getCurrentPhoto() {
+    if (this.state.gallery.length > 0) {
+      return this.state.gallery[this.state.gallery.length - 1];
+    } else {
+      return null;
     }
   }
 
@@ -126,9 +132,10 @@ class App extends Component {
               <Grid.Column width="10">
                 <Button
                   onClick={() => {
-                    this.forceDownload(
-                      this.state.gallery.length > 0 ? this.state.photo : null
-                    );
+                    let currentPhoto = this.getCurrentPhoto();
+                    if (currentPhoto) {
+                      this.forceDownload(currentPhoto);
+                    }
                   }}
                   className="image-button"
                   fluid
@@ -136,7 +143,8 @@ class App extends Component {
                   <Image
                     src={
                       this.state.gallery.length > 0
-                        ? this.state.photo.urls.custom
+                        ? this.state.gallery[this.state.gallery.length - 1].urls
+                            .custom
                         : ""
                     }
                     size="massive"
@@ -272,18 +280,24 @@ class App extends Component {
                   <Grid.Row>
                     <Grid.Column>
                       <Segment>
-                        <this.infoNode
-                          title="Title"
-                          description={this.state.photo.alt_description}
-                        />
-                        <this.infoNode
-                          title="Description"
-                          description={this.state.photo.description}
-                        />
-                        <this.infoNode
-                          title="Created At"
-                          description={this.state.photo.created_at}
-                        />
+                        {this.getCurrentPhoto() && (
+                          <this.infoNode
+                            title="Title"
+                            description={this.getCurrentPhoto().alt_description}
+                          />
+                        )}
+                        {this.getCurrentPhoto() && (
+                          <this.infoNode
+                            title="Description"
+                            description={this.getCurrentPhoto().description}
+                          />
+                        )}
+                        {this.getCurrentPhoto() && (
+                          <this.infoNode
+                            title="Created At"
+                            description={this.getCurrentPhoto().created_at}
+                          />
+                        )}
                       </Segment>
                     </Grid.Column>
                   </Grid.Row>
