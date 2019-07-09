@@ -1,4 +1,4 @@
-<a href="#"><img src="./src/logo.png" title="Flica" alt="Flica"></a>
+<a href="#"><img src="./public/logo2.png" title="Flica" alt="Flica"></a>
 
 # Flica
 
@@ -23,13 +23,13 @@
 
 ***DEFAULT (WITHOUT TAGS)***
 
-[![Looking for wallpaper](usage1.gif)]()
+![Next](usage1.gif)
 
 Using the `Next` button fetches a random wallpaper using Unsplash's image API. Each wallpaper is saved to the gallery for retrieving later on.
 
 ***USING TAGS***
 
-[![Tag](usage2.gif)]()
+![Tag](usage2.gif)
 
 - By enabling `Search by tag`, the text field can be used to specify certain elements of a requested wallpaper.
 ---
