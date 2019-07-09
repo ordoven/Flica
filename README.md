@@ -2,9 +2,6 @@
 
 # Flica
 
-[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger)
-
-
 > A web application built using React, Semantic UI & Unsplash Image API.
 
 > Access at: https://sleepy-joliot-a28cc4.netlify.com
