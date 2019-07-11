@@ -64,13 +64,13 @@ class App extends Component {
     if (photo === null || photo === undefined) {
       return;
     } else {
-      var xhr = new XMLHttpRequest();
+      let xhr = new XMLHttpRequest();
       xhr.open("GET", photo.urls.raw, true);
       xhr.responseType = "blob";
       xhr.onload = function() {
-        var urlCreator = window.URL || window.webkitURL;
-        var imageUrl = urlCreator.createObjectURL(this.response);
-        var tag = document.createElement("a");
+        let urlCreator = window.URL || window.webkitURL;
+        let imageUrl = urlCreator.createObjectURL(this.response);
+        let tag = document.createElement("a");
         tag.href = imageUrl;
         tag.download = photo.alt_description;
         document.body.appendChild(tag);
