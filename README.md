@@ -67,7 +67,7 @@ The app is ready to be deployed.
 Reach out to me at one of the following places!
 
 - Email at <a href="mailto:tadasknieza@gmail.com" target="_top">`tadasknieza@gmail.com`</a>
-- Twitter at <a href="http://twitter.com/trashtofu" target="_blank">`@trashtofu`</a>
+- Twitter at <a href="http://twitter.com/tadasknieza" target="_blank">`@tadasknieza`</a>
 
 ---
 
