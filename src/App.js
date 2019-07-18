@@ -40,7 +40,8 @@ class App extends Component {
     this.state.unsplash.photos
       .getRandomPhoto({
         width: this.state.mobile ? 720 : 1024,
-        height: this.state.mobile ? 1280 : 576
+        height: this.state.mobile ? 1280 : 576,
+        query: this.state.query
       })
       .then(toJson)
       .then(json => {
@@ -187,11 +188,16 @@ class App extends Component {
                         loading={this.state.loading}
                         disabled={this.state.loading}
                         onClick={() => {
-                          this.setState({
-                            mobile: !this.state.mobile,
-                            loading: true
-                          });
-                          setTimeout(() => this.fetchImage(), 100);
+                          if (this.state.keywordSearch && !this.state.query) {
+                            this.setState({ error: true });
+                          } else {
+                            this.setState({
+                              error: false,
+                              mobile: !this.state.mobile,
+                              loading: true
+                            });
+                            setTimeout(() => this.fetchImage(), 100);
+                          }
                         }}
                         fluid
                       >
