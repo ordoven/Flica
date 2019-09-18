@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.jpg";
+import logo from "../Assets/logo.jpg";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 import {
@@ -27,10 +27,8 @@ class App extends Component {
       gallery: [],
       query: "",
       unsplash: new Unsplash({
-        applicationId:
-          "ccb07e71cb4e97185a7cecab55d1ad1024b89c062f8759b9ccae6870db7280fa",
-        secret:
-          "901ffa2f5250f014bfc2db11c4eeea78df401bdfbf442f8e83942fcc0497c2e5"
+        applicationId: process.env.REACT_APP_ID,
+        secret: process.env.REACT_APP_SECRET
       })
     };
   }
