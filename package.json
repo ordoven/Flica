@@ -10,6 +10,9 @@
     "semantic-ui-react": "^0.87.3",
     "unsplash-js": "^5.0.0"
   },
+  "devDependencies": {
+    "serialize-javascript": ">=2.1.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
